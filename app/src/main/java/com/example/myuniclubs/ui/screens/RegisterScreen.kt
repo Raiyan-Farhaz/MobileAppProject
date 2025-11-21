@@ -12,6 +12,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myuniclubs.viewmodel.AuthState
 import com.example.myuniclubs.viewmodel.AuthViewModel
+import org.w3c.dom.Text
+import java.lang.reflect.Modifier
 
 @Composable
 fun RegisterScreen(
