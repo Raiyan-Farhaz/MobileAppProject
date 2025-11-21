@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.example.myuniclubs"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.myuniclubs"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -67,7 +67,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:34.6.0"))
 
     // Firebase Auth
-    implementation("com.google.firebase:firebase-auth-ktx")
+  implementation("com.google.firebase:firebase-auth-ktx")
 
     // Room
     implementation("androidx.room:room-runtime:2.6.1")
