@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "758124187594",
+    "project_id": "myuniclubs-3fb1d",
+    "storage_bucket": "myuniclubs-3fb1d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:758124187594:android:68d00a5fd9d41d278cc933",
+        "android_client_info": {
+          "package_name": "com.example.myuniclubs"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXmQ0pMuM4nlF9cUD2pnpfZiV0ttm4ADI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
