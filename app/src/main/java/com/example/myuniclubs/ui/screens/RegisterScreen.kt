@@ -14,20 +14,20 @@ import com.example.myuniclubs.viewmodel.AuthState
 import com.example.myuniclubs.viewmodel.AuthViewModel
 
 @Composable
-fun LoginScreen(
+fun RegisterScreen(
     viewModel: AuthViewModel = viewModel(),
-    onLoginSuccess: () -> Unit,
-    onNavigateToRegister: () -> Unit
+    onRegisterSuccess: () -> Unit,
+    onNavigateToLogin: () -> Unit
 ) {
     val authState by viewModel.authState.collectAsState()
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    // Navigate when login succeeds
+    // Navigate when register succeeds
     LaunchedEffect(authState) {
         if (authState is AuthState.Success) {
-            onLoginSuccess()
+            onRegisterSuccess()
         }
     }
 
@@ -39,7 +39,7 @@ fun LoginScreen(
         verticalArrangement = Arrangement.Center
     ) {
 
-        Text("Login", style = MaterialTheme.typography.headlineMedium)
+        Text("Register", style = MaterialTheme.typography.headlineMedium)
 
         Spacer(Modifier.height(20.dp))
 
@@ -76,19 +76,19 @@ fun LoginScreen(
         Spacer(Modifier.height(20.dp))
 
         Button(
-            onClick = { viewModel.login(email, password) },
+            onClick = { viewModel.register(email, password) },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Sign In")
+            Text("Create Account")
         }
 
         Spacer(Modifier.height(8.dp))
 
         TextButton(
-            onClick = { onNavigateToRegister() },
+            onClick = { onNavigateToLogin() },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Create an Account")
+            Text("Already have an account? Login")
         }
     }
 }
