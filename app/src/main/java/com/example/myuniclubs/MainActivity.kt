@@ -12,7 +12,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MyUniClubsTheme {
-                AppNavGraph()   // 🔥 This launches your full navigation (Login → Register → Home)
+                //loading AppNavGraph.kt
+                AppNavGraph()   //  This launches my full navigation (Login → Register → Home)
             }
         }
     }
