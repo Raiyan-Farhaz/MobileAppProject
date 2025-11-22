@@ -15,16 +15,20 @@ import com.example.myuniclubs.viewmodel.AuthViewModel
 
 @Composable
 fun LoginScreen(
-    viewModel: AuthViewModel = viewModel(),
-    onLoginSuccess: () -> Unit,
-    onNavigateToRegister: () -> Unit
+    viewModel: AuthViewModel = viewModel(),//Creates or get the AuthViewModel
+    onLoginSuccess: () -> Unit, //Function to call when login works
+    onNavigateToRegister: () -> Unit //Function to move to Register screen
 ) {
+    // Collect the authentication state from the ViewModel.
+    // authState can be Loading, Success, or Error.
     val authState by viewModel.authState.collectAsState()
 
+    // Remember text typed inside email & password fields.
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    // Navigate when login succeeds
+    // --- AUTO-NAVIGATION ON SUCCESS ---
+    // When the login works, navigate automatically
     LaunchedEffect(authState) {
         if (authState is AuthState.Success) {
             onLoginSuccess()
