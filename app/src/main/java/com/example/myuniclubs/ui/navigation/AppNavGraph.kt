@@ -78,5 +78,10 @@ fun AppNavGraph() {
                 savedClubs = sampleClubs.filter { it.saved }
             )
         }
+        composable("profile") {
+            ProfileScreen(
+                onLogout = { navController.navigate("login") }
+            )
+        }
     }
 }
