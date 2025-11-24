@@ -8,9 +8,12 @@ import androidx.compose.ui.unit.dp
 import com.example.myuniclubs.data.ClubEntity
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    onNavigateToClubs: () -> Unit,
+    onNavigateToSaved: () -> Unit
+) {
 
-    // Fake hardcoded clubs for Sprint 2
+    // Existing sample clubs
     val sampleClubs = listOf(
         ClubEntity(name = "Music Club", category = "Arts", description = "Love music? Join us!"),
         ClubEntity(name = "Gaming Club", category = "Entertainment", description = "Gamers unite!"),
@@ -28,8 +31,29 @@ fun HomeScreen() {
             style = MaterialTheme.typography.headlineMedium
         )
 
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(20.dp))
 
+        // ---------------- NEW BUTTONS ----------------
+
+        Button(
+            onClick = onNavigateToClubs,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("View All Clubs")
+        }
+
+        Spacer(Modifier.height(8.dp))
+
+        Button(
+            onClick = onNavigateToSaved,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Saved Clubs")
+        }
+
+        Spacer(Modifier.height(20.dp))
+
+        // Existing preview of sample clubs
         sampleClubs.forEach { club ->
             Card(
                 modifier = Modifier
@@ -45,5 +69,3 @@ fun HomeScreen() {
         }
     }
 }
-
-
