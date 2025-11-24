@@ -10,10 +10,11 @@ import com.example.myuniclubs.data.ClubEntity
 @Composable
 fun HomeScreen(
     onNavigateToClubs: () -> Unit,
-    onNavigateToSaved: () -> Unit
+    onNavigateToSaved: () -> Unit,
+    onNavigateToProfile: () -> Unit
 ) {
 
-    // Existing sample clubs
+    // Existing sample clubs (Sprint 2 preview)
     val sampleClubs = listOf(
         ClubEntity(name = "Music Club", category = "Arts", description = "Love music? Join us!"),
         ClubEntity(name = "Gaming Club", category = "Entertainment", description = "Gamers unite!"),
@@ -33,7 +34,7 @@ fun HomeScreen(
 
         Spacer(Modifier.height(20.dp))
 
-        // ---------------- NEW BUTTONS ----------------
+        // ---------------- TOP BUTTONS ----------------
 
         Button(
             onClick = onNavigateToClubs,
@@ -51,9 +52,18 @@ fun HomeScreen(
             Text("Saved Clubs")
         }
 
+        Spacer(Modifier.height(8.dp))
+
+        Button(
+            onClick = onNavigateToProfile,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Profile")
+        }
+
         Spacer(Modifier.height(20.dp))
 
-        // Existing preview of sample clubs
+        // ---------------- SAMPLE PREVIEW (Sprint 2) ----------------
         sampleClubs.forEach { club ->
             Card(
                 modifier = Modifier

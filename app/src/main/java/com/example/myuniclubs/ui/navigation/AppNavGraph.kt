@@ -24,6 +24,8 @@ fun AppNavGraph() {
         navController = navController,
         startDestination = "login"
     ) {
+
+        // ---------------- LOGIN ----------------
         composable("login") {
             LoginScreen(
                 onLoginSuccess = { navController.navigate("home") },
@@ -31,6 +33,7 @@ fun AppNavGraph() {
             )
         }
 
+        // ---------------- REGISTER ----------------
         composable("register") {
             RegisterScreen(
                 onRegisterSuccess = { navController.navigate("home") },
@@ -38,16 +41,16 @@ fun AppNavGraph() {
             )
         }
 
+        // ---------------- HOME ----------------
         composable("home") {
             HomeScreen(
                 onNavigateToClubs = { navController.navigate("clubs") },
-                onNavigateToSaved = { navController.navigate("saved") }
+                onNavigateToSaved = { navController.navigate("saved") },
+                onNavigateToProfile = { navController.navigate("profile") }   // ✅ Added
             )
         }
 
-        // ---------------- NEW FOR SPRINT 3 ----------------
-
-        // Clubs list
+        // ---------------- CLUB LIST ----------------
         composable("clubs") {
             ClubListScreen(
                 clubs = sampleClubs,
@@ -57,7 +60,7 @@ fun AppNavGraph() {
             )
         }
 
-        // Club details
+        // ---------------- CLUB DETAIL ----------------
         composable(
             route = "clubDetail/{clubId}",
             arguments = listOf(navArgument("clubId") { type = NavType.IntType })
@@ -68,19 +71,25 @@ fun AppNavGraph() {
             ClubDetailScreen(
                 club = club,
                 onBack = { navController.popBackStack() },
-                onSaveToggle = { /* TODO: connect to Room */ }
+                onSaveToggle = { /* todo: connect to room later */ }
             )
         }
 
-        // Saved clubs
+        // ---------------- SAVED CLUBS ----------------
         composable("saved") {
             SavedClubsScreen(
                 savedClubs = sampleClubs.filter { it.saved }
             )
         }
+
+        // ---------------- PROFILE SCREEN ----------------
         composable("profile") {
             ProfileScreen(
-                onLogout = { navController.navigate("login") }
+                onLogout = {
+                    navController.navigate("login") {
+                        popUpTo("home") { inclusive = true } // clears back stack
+                    }
+                }
             )
         }
     }

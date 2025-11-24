@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myuniclubs.viewmodel.AuthState
 import com.example.myuniclubs.viewmodel.AuthViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun RegisterScreen(
@@ -20,6 +21,8 @@ fun RegisterScreen(
     onNavigateToLogin: () -> Unit
 ) {
     val authState by viewModel.authState.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -31,64 +34,78 @@ fun RegisterScreen(
         }
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
+    Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) }
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
 
-        Text("Register", style = MaterialTheme.typography.headlineMedium)
+            Text("Register", style = MaterialTheme.typography.headlineMedium)
 
-        Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(20.dp))
 
-        TextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text("Email") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            modifier = Modifier.fillMaxWidth()
-        )
+            TextField(
+                value = email,
+                onValueChange = { email = it },
+                label = { Text("Email") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                modifier = Modifier.fillMaxWidth()
+            )
 
-        Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(10.dp))
 
-        TextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("Password") },
-            visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth()
-        )
+            TextField(
+                value = password,
+                onValueChange = { password = it },
+                label = { Text("Password") },
+                visualTransformation = PasswordVisualTransformation(),
+                modifier = Modifier.fillMaxWidth()
+            )
 
-        Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(20.dp))
 
-        when (authState) {
-            is AuthState.Error ->
-                Text(
+            // Error OR Loading indicator
+            when (authState) {
+                is AuthState.Error -> Text(
                     text = (authState as AuthState.Error).message,
                     color = MaterialTheme.colorScheme.error
                 )
-            AuthState.Loading -> CircularProgressIndicator()
-            else -> {}
-        }
 
-        Spacer(Modifier.height(20.dp))
+                AuthState.Loading -> CircularProgressIndicator()
+                else -> {}
+            }
 
-        Button(
-            onClick = { viewModel.register(email, password) },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Create Account")
-        }
+            Spacer(Modifier.height(20.dp))
 
-        Spacer(Modifier.height(8.dp))
+            Button(
+                onClick = {
+                    if (email.isBlank() || password.isBlank()) {
+                        coroutineScope.launch {
+                            snackbarHostState.showSnackbar("All fields are required")
+                        }
+                    } else {
+                        viewModel.register(email, password)
+                    }
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Create Account")
+            }
 
-        TextButton(
-            onClick = { onNavigateToLogin() },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Already have an account? Login")
+            Spacer(Modifier.height(8.dp))
+
+            TextButton(
+                onClick = onNavigateToLogin,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Already have an account? Login")
+            }
         }
     }
 }
