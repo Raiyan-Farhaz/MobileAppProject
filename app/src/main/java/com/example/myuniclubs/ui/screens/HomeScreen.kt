@@ -1,79 +1,133 @@
 package com.example.myuniclubs.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myuniclubs.data.ClubEntity
+import com.example.myuniclubs.ui.theme.*
+import com.example.myuniclubs.viewmodel.AuthViewModel
 
 @Composable
 fun HomeScreen(
     onNavigateToClubs: () -> Unit,
     onNavigateToSaved: () -> Unit,
-    onNavigateToProfile: () -> Unit
+    onNavigateToProfile: () -> Unit,
+    viewModel: AuthViewModel = viewModel()
 ) {
+    val userEmail = viewModel.currentUserEmail ?: "User"
 
-    // Existing sample clubs (Sprint 2 preview)
     val sampleClubs = listOf(
-        ClubEntity(name = "Music Club", category = "Arts", description = "Love music? Join us!"),
-        ClubEntity(name = "Gaming Club", category = "Entertainment", description = "Gamers unite!"),
-        ClubEntity(name = "Chess Club", category = "Strategy", description = "Challenge your mind."),
+        ClubEntity(1, "Music Club", "Arts", "Love music? Join us!"),
+        ClubEntity(2, "Gaming Club", "Entertainment", "Gamers unite!"),
+        ClubEntity(3, "Chess Club", "Strategy", "Challenge your mind.")
     )
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
+    Column(modifier = Modifier.fillMaxSize()) {
 
-        Text(
-            text = "Welcome to MyUniClubs",
-            style = MaterialTheme.typography.headlineMedium
-        )
-
-        Spacer(Modifier.height(20.dp))
-
-        // ---------------- TOP BUTTONS ----------------
-
-        Button(
-            onClick = onNavigateToClubs,
-            modifier = Modifier.fillMaxWidth()
+        // ---------------- HEADER ----------------
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(80.dp)
+                .background(BlueHeader),
+            contentAlignment = Alignment.Center
         ) {
-            Text("View All Clubs")
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    text = "Explore TUS Clubs",
+                    fontWeight = FontWeight.Bold,
+                    color = DarkText,
+                    style = MaterialTheme.typography.headlineSmall
+                )
+                Text(
+                    text = "Welcome, $userEmail",
+                    color = DarkText,
+                    fontWeight = FontWeight.Medium
+                )
+            }
         }
 
-        Spacer(Modifier.height(8.dp))
-
-        Button(
-            onClick = onNavigateToSaved,
-            modifier = Modifier.fillMaxWidth()
+        // ---------------- MAIN ORANGE AREA ----------------
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .background(OrangeBackground)
+                .padding(16.dp)
         ) {
-            Text("Saved Clubs")
-        }
 
-        Spacer(Modifier.height(8.dp))
+            sampleClubs.forEach { club ->
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 10.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = LightGrayField
+                    ),
+                    shape = RoundedCornerShape(10.dp)
+                ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text(club.name, fontWeight = FontWeight.Bold, color = DarkText)
+                        Text(club.category, color = DarkText)
+                        Text(club.description, color = DarkText)
+                    }
+                }
+            }
 
-        Button(
-            onClick = onNavigateToProfile,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Profile")
-        }
-
-        Spacer(Modifier.height(20.dp))
-
-        // ---------------- SAMPLE PREVIEW (Sprint 2) ----------------
-        sampleClubs.forEach { club ->
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp)
+            TextButton(
+                onClick = {},
+                modifier = Modifier.align(Alignment.End)
             ) {
-                Column(Modifier.padding(16.dp)) {
-                    Text(club.name, style = MaterialTheme.typography.titleLarge)
-                    Text(club.category, style = MaterialTheme.typography.bodyMedium)
-                    Text(club.description, style = MaterialTheme.typography.bodySmall)
+                Text("See more..", color = DarkText)
+            }
+        }
+
+        // ---------------- BOTTOM NAV BAR ----------------
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(90.dp)
+                .background(BlueHeader),
+            contentAlignment = Alignment.Center
+        ) {
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Button(
+                    onClick = onNavigateToClubs,
+                    colors = ButtonDefaults.buttonColors(containerColor = BlueButton),
+                    shape = RoundedCornerShape(20.dp)
+                ) {
+                    Text("All Clubs", color = Color.White)
+                }
+
+                Button(
+                    onClick = onNavigateToSaved,
+                    colors = ButtonDefaults.buttonColors(containerColor = BlueButton),
+                    shape = RoundedCornerShape(20.dp)
+                ) {
+                    Text("Saved Clubs", color = Color.White)
+                }
+
+                Button(
+                    onClick = onNavigateToProfile,
+                    colors = ButtonDefaults.buttonColors(containerColor = BlueButton),
+                    shape = RoundedCornerShape(20.dp)
+                ) {
+                    Text("Profile", color = Color.White)
                 }
             }
         }
