@@ -76,7 +76,7 @@ fun SportsClubDetailsScreen(onBack: () -> Unit) {
                     Spacer(Modifier.height(16.dp))
 
                     // PARAGRAPH ABOUT OUTDOOR SPORTS & CLUB FEEL
-                    Text("The Gaming Club brings together players who enjoy teamwork, strategy, and friendly competition.")
+                    Text("The TUS Gaming Club brings together players who enjoy teamwork, strategy, and friendly competition.")
                     Spacer(Modifier.height(6.dp))
 
                     Text("Along with digital gaming, we participate in outdoor sports like cricket, football, rugby, tennis, and basketball.")

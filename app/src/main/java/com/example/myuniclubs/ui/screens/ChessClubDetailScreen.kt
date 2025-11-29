@@ -77,7 +77,7 @@ fun ChessClubDetailScreen(onBack: () -> Unit) {
 
 
                     Text(
-                        "The Chess Club welcomes all students, from beginners to advanced players.",
+                        "The TUS Chess Club welcomes all students, from beginners to advanced players.",
                         color = DarkText
                     )
                     Spacer(Modifier.height(6.dp))
