@@ -1,6 +1,7 @@
 package com.example.myuniclubs.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -21,6 +22,7 @@ fun HomeScreen(
     onNavigateToClubs: () -> Unit,
     onNavigateToSaved: () -> Unit,
     onNavigateToProfile: () -> Unit,
+    onClubClick: (Int) -> Unit,
     viewModel: AuthViewModel = viewModel()
 ) {
     val userEmail = viewModel.currentUserEmail ?: "User"
@@ -69,7 +71,9 @@ fun HomeScreen(
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .clickable { onClubClick(club.id) }   // ⬅ ADD THIS
                         .padding(vertical = 10.dp),
+
                     colors = CardDefaults.cardColors(
                         containerColor = LightGrayField
                     ),

@@ -57,7 +57,7 @@ fun ProfileScreen(
 
             Spacer(Modifier.height(16.dp))
 
-            // EMAIL AS NAME (requested)
+            // EMAIL AS NAME
             Text(
                 text = userEmail,
                 fontWeight = FontWeight.Bold,
@@ -67,25 +67,23 @@ fun ProfileScreen(
 
             Spacer(Modifier.height(24.dp))
 
-            // ----- BUTTONS -----
+            // BUTTONS
             ProfileButton("My Saved Clubs", onNavigateToSaved)
-
             Spacer(Modifier.height(12.dp))
 
             ProfileButton("Edit Profile") {}
-
             Spacer(Modifier.height(12.dp))
 
             ProfileButton("Settings and Preferences") {}
+            Spacer(Modifier.height(25.dp))
 
-            Spacer(Modifier.height(20.dp))
-
-            // ----- LOGOUT -----
+            // LOG OUT
             Button(
                 onClick = onLogout,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
+                    .padding(horizontal = 20.dp)
+                    .height(50.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = BlueButton),
                 shape = RoundedCornerShape(20.dp)
             ) {
@@ -97,22 +95,26 @@ fun ProfileScreen(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(80.dp)
+                .height(90.dp)
                 .background(BlueHeader),
             contentAlignment = Alignment.Center
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
             ) {
+
+                // Home Button
                 Button(
-                    onClick = {}, // stay on home? or implement navigation
+                    onClick = {},
                     colors = ButtonDefaults.buttonColors(containerColor = BlueButton),
                     shape = RoundedCornerShape(20.dp)
                 ) {
                     Text("Home", color = Color.White)
                 }
 
+                // Profile Button
                 Button(
                     onClick = {},
                     colors = ButtonDefaults.buttonColors(containerColor = BlueButton),
@@ -129,7 +131,9 @@ fun ProfileScreen(
 private fun ProfileButton(text: String, onClick: () -> Unit) {
     Button(
         onClick = onClick,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(50.dp),
         colors = ButtonDefaults.buttonColors(containerColor = LightGrayField),
         shape = RoundedCornerShape(10.dp)
     ) {

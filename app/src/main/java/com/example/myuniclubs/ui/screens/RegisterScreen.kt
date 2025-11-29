@@ -2,20 +2,21 @@ package com.example.myuniclubs.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myuniclubs.ui.theme.BlueHeader
 import com.example.myuniclubs.ui.theme.OrangeBackground
-import com.example.myuniclubs.ui.theme.LightGrayField
 import com.example.myuniclubs.ui.theme.BlueButton
+import com.example.myuniclubs.ui.theme.LightGrayField
+import com.example.myuniclubs.ui.theme.DarkText
 import com.example.myuniclubs.viewmodel.AuthState
 import com.example.myuniclubs.viewmodel.AuthViewModel
 import kotlinx.coroutines.launch
@@ -23,49 +24,45 @@ import kotlinx.coroutines.launch
 @Composable
 fun RegisterScreen(
     viewModel: AuthViewModel = viewModel(),
-    onRegisterSuccess: () -> Unit,
+    onRegisterSuccess: (String) -> Unit,
     onNavigateToLogin: () -> Unit
 ) {
     val authState by viewModel.authState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
 
+    var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    // Auto-navigate when register is successful
+    // Navigate when done
     LaunchedEffect(authState) {
         if (authState is AuthState.Success) {
-            onRegisterSuccess()
+            onRegisterSuccess(name)
         }
     }
 
-    Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
-    ) { padding ->
+    Scaffold(snackbarHost = { SnackbarHost(snackbarHostState) }) { padding ->
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-        ) {
+        Column(modifier = Modifier.fillMaxSize()) {
 
-            // ------------ HEADER (Blue Bar) ------------
+            // ---------------- HEADER ----------------
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(120.dp)
+                    .height(80.dp)
                     .background(BlueHeader),
-                contentAlignment = Alignment.BottomCenter
+                contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = "My Uni Clubs",
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = Color.White
+                    fontWeight = FontWeight.Bold,
+                    color = DarkText,
+                    style = MaterialTheme.typography.headlineSmall
                 )
             }
 
-            // ------------ MAIN CONTENT (Orange Body) ------------
+            // ---------------- ORANGE BACKGROUND ----------------
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -78,87 +75,100 @@ fun RegisterScreen(
 
                 Text(
                     text = "Register",
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.onSecondary
+                    fontWeight = FontWeight.Bold,
+                    color = DarkText,
+                    style = MaterialTheme.typography.headlineMedium
                 )
 
                 Spacer(Modifier.height(20.dp))
 
-                // Email Field (FIGMA: gray input box)
+                // ---------- NAME ----------
+                TextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("Full Name") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(LightGrayField, RoundedCornerShape(10.dp)),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = LightGrayField,
+                        unfocusedContainerColor = LightGrayField
+                    )
+                )
+
+                Spacer(Modifier.height(10.dp))
+
+                // ---------- EMAIL ----------
                 TextField(
                     value = email,
                     onValueChange = { email = it },
                     label = { Text("Email") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(LightGrayField, RoundedCornerShape(10.dp)),
                     colors = TextFieldDefaults.colors(
-                        unfocusedContainerColor = LightGrayField,
-                        focusedContainerColor = LightGrayField
-                    ),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                    modifier = Modifier.fillMaxWidth()
+                        focusedContainerColor = LightGrayField,
+                        unfocusedContainerColor = LightGrayField
+                    )
                 )
 
-                Spacer(Modifier.height(12.dp))
+                Spacer(Modifier.height(10.dp))
 
-                // Password Field
+                // ---------- PASSWORD ----------
                 TextField(
                     value = password,
                     onValueChange = { password = it },
                     label = { Text("Password") },
                     visualTransformation = PasswordVisualTransformation(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(LightGrayField, RoundedCornerShape(10.dp)),
                     colors = TextFieldDefaults.colors(
-                        unfocusedContainerColor = LightGrayField,
-                        focusedContainerColor = LightGrayField
-                    ),
-                    modifier = Modifier.fillMaxWidth()
+                        focusedContainerColor = LightGrayField,
+                        unfocusedContainerColor = LightGrayField
+                    )
                 )
 
                 Spacer(Modifier.height(20.dp))
 
-                // Error / Loading
+                // ---------- ERROR + LOADING ----------
                 when (authState) {
-                    is AuthState.Error ->
-                        Text(
-                            text = (authState as AuthState.Error).message,
-                            color = MaterialTheme.colorScheme.error
-                        )
-
+                    is AuthState.Error -> Text(
+                        (authState as AuthState.Error).message,
+                        color = Color.Red
+                    )
                     AuthState.Loading -> CircularProgressIndicator()
-
                     else -> {}
                 }
 
                 Spacer(Modifier.height(20.dp))
 
-                // Create Account Button (FIGMA Blue)
+                // ---------- REGISTER BUTTON ----------
                 Button(
                     onClick = {
-                        if (email.isBlank() || password.isBlank()) {
+                        if (name.isBlank() || email.isBlank() || password.isBlank()) {
                             coroutineScope.launch {
                                 snackbarHostState.showSnackbar("All fields are required")
                             }
                         } else {
-                            viewModel.register(email, password)
+                            viewModel.registerWithName(name, email, password)
                         }
                     },
+                    colors = ButtonDefaults.buttonColors(containerColor = BlueButton),
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = BlueButton)
+                    shape = RoundedCornerShape(20.dp)
                 ) {
                     Text("Create Account", color = Color.White)
                 }
 
-                Spacer(Modifier.height(12.dp))
+                Spacer(Modifier.height(10.dp))
 
-                TextButton(
-                    onClick = onNavigateToLogin
-                ) {
-                    Text("Already have an account? Login", color = Color.Black)
+                TextButton(onClick = onNavigateToLogin) {
+                    Text("Already have an account? Login", color = DarkText)
                 }
             }
         }
     }
 }
-
-
-

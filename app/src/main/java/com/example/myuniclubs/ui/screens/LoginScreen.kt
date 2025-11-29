@@ -3,14 +3,12 @@ package com.example.myuniclubs.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,14 +32,12 @@ fun LoginScreen(
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    // Auto navigate after success
+    // Navigate automatically when login succeeds
     LaunchedEffect(authState) {
         if (authState is AuthState.Success) onLoginSuccess()
     }
 
-    Scaffold(
-        snackbarHost = { SnackbarHost(snackbarHostState) }
-    ) { padding ->
+    Scaffold(snackbarHost = { SnackbarHost(snackbarHostState) }) { padding ->
 
         Column(
             modifier = Modifier
@@ -69,13 +65,14 @@ fun LoginScreen(
 
             Spacer(Modifier.height(30.dp))
 
-            // ------------------ LOGIN BUTTONS (FIGMA STYLE TABS) ------------------
+            // ------------------ LOGIN / REGISTER TABS ------------------
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
+                // Login Tab (selected)
                 Button(
                     onClick = {},
                     colors = ButtonDefaults.buttonColors(containerColor = BlueButton),
@@ -87,9 +84,10 @@ fun LoginScreen(
 
                 Spacer(Modifier.width(12.dp))
 
+                // Register Tab
                 Button(
                     onClick = onNavigateToRegister,
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB4E64C)), // Green register tab
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB4E64C)), // Figma green
                     shape = RoundedCornerShape(30.dp),
                     modifier = Modifier.weight(1f)
                 ) {
@@ -99,15 +97,18 @@ fun LoginScreen(
 
             Spacer(Modifier.height(25.dp))
 
-            // ------------------ EMAIL FIELD ------------------
+            // ------------------ EMAIL LABEL ------------------
             Text(
                 text = "Email",
                 fontSize = 16.sp,
+                fontWeight = FontWeight.Medium,
+                color = DarkText,
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(start = 24.dp)
             )
 
+            // Email field
             TextField(
                 value = email,
                 onValueChange = { email = it },
@@ -122,15 +123,18 @@ fun LoginScreen(
 
             Spacer(Modifier.height(15.dp))
 
-            // ------------------ PASSWORD FIELD ------------------
+            // ------------------ PASSWORD LABEL ------------------
             Text(
                 text = "Password",
                 fontSize = 16.sp,
+                fontWeight = FontWeight.Medium,
+                color = DarkText,
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(start = 24.dp)
             )
 
+            // Password field
             TextField(
                 value = password,
                 onValueChange = { password = it },
@@ -146,7 +150,7 @@ fun LoginScreen(
 
             Spacer(Modifier.height(28.dp))
 
-            // LOGIN BUTTON (FIGMA BLUE)
+            // ------------------ LOGIN BUTTON ------------------
             Button(
                 onClick = {
                     if (email.isBlank() || password.isBlank()) {
@@ -161,15 +165,17 @@ fun LoginScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp)
+                    .height(50.dp),
+                shape = RoundedCornerShape(20.dp)
             ) {
-                Text("Login")
+                Text("Login", color = Color.White)
             }
 
             Spacer(Modifier.height(15.dp))
 
-            // Navigate to Register
+            // ------------------ GO TO REGISTER ------------------
             TextButton(onClick = onNavigateToRegister) {
-                Text("Don't have an account? Register")
+                Text("Don't have an account? Register", color = DarkText)
             }
         }
     }

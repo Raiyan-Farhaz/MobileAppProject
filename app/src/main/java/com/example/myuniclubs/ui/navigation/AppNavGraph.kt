@@ -4,20 +4,20 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
 import com.example.myuniclubs.ui.screens.*
 import com.example.myuniclubs.data.ClubEntity
+import com.google.firebase.auth.FirebaseAuth
 
-// Temporary sample clubs (replace with Room later)
+// Temporary sample clubs for list/preview
 val sampleClubs = listOf(
-    ClubEntity(id = 1, name = "Music Club", category = "Arts", description = "Love music? Join us!"),
-    ClubEntity(id = 2, name = "Gaming Club", category = "Entertainment", description = "Gamers unite!"),
-    ClubEntity(id = 3, name = "Chess Club", category = "Strategy", description = "Challenge your mind.")
+    ClubEntity(1, "Music Club", "Arts", "Love music? Join us!"),
+    ClubEntity(2, "Gaming Club", "Entertainment", "Gamers unite!"),
+    ClubEntity(3, "Chess Club", "Strategy", "Challenge your mind.")
 )
 
 @Composable
 fun AppNavGraph() {
+
     val navController = rememberNavController()
 
     NavHost(
@@ -46,7 +46,15 @@ fun AppNavGraph() {
             HomeScreen(
                 onNavigateToClubs = { navController.navigate("clubs") },
                 onNavigateToSaved = { navController.navigate("saved") },
-                onNavigateToProfile = { navController.navigate("profile") }   // ✅ Added
+                onNavigateToProfile = { navController.navigate("profile") },
+                // pass navigation for club clicks:
+                onClubClick = { clubId ->
+                    when (clubId) {
+                        1 -> navController.navigate("musicDetail")
+                        2 -> navController.navigate("gamingDetail")
+                        3 -> navController.navigate("chessDetail")
+                    }
+                }
             )
         }
 
@@ -55,39 +63,44 @@ fun AppNavGraph() {
             ClubListScreen(
                 clubs = sampleClubs,
                 onClubClick = { club ->
-                    navController.navigate("clubDetail/${club.id}")
+                    when (club.id) {
+                        1 -> navController.navigate("musicDetail")
+                        2 -> navController.navigate("gamingDetail")
+                        3 -> navController.navigate("chessDetail")
+                    }
                 }
             )
         }
 
-        // ---------------- CLUB DETAIL ----------------
-        composable(
-            route = "clubDetail/{clubId}",
-            arguments = listOf(navArgument("clubId") { type = NavType.IntType })
-        ) { backStackEntry ->
-            val clubId = backStackEntry.arguments?.getInt("clubId") ?: 0
-            val club = sampleClubs.first { it.id == clubId }
+        // ---------------- INDIVIDUAL CLUB DETAIL PAGES ----------------
+        composable("musicDetail") {
+            MusicClubDetailScreen(onBack = { navController.popBackStack() })
+        }
 
-            ClubDetailScreen(
-                club = club,
-                onBack = { navController.popBackStack() },
-                onSaveToggle = { /* todo: connect to room later */ }
-            )
+        composable("gamingDetail") {
+            SportsClubDetailsScreen(onBack = { navController.popBackStack() })
+        }
+
+        composable("chessDetail") {
+            ChessClubDetailScreen(onBack = { navController.popBackStack() })
         }
 
         // ---------------- SAVED CLUBS ----------------
         composable("saved") {
-            SavedClubsScreen(
-                savedClubs = sampleClubs.filter { it.saved }
-            )
+            SavedClubsScreen(savedClubs = sampleClubs.filter { it.saved })
         }
 
-        // ---------------- PROFILE SCREEN ----------------
+        // ---------------- PROFILE ----------------
         composable("profile") {
+
+            val email = FirebaseAuth.getInstance().currentUser?.email ?: "Unknown User"
+
             ProfileScreen(
+                userEmail = email,
+                onNavigateToSaved = { navController.navigate("saved") },
                 onLogout = {
                     navController.navigate("login") {
-                        popUpTo("home") { inclusive = true } // clears back stack
+                        popUpTo("home") { inclusive = true }
                     }
                 }
             )
