@@ -58,6 +58,7 @@ fun ChessClubDetailScreen(onBack: () -> Unit) {
                 colors = CardDefaults.cardColors(LightGrayField)
             ) {
                 Column(Modifier.padding(16.dp)) {
+
                     Text("Chess Club", fontWeight = FontWeight.Bold)
                     Text("Challenge your mind. Weekly meetings available!")
 
@@ -71,6 +72,32 @@ fun ChessClubDetailScreen(onBack: () -> Unit) {
                     ) {
                         Text("Join Club", color = Color.White)
                     }
+
+                    Spacer(Modifier.height(16.dp))
+
+                    // ⭐ NEW SIMPLE DESCRIPTION (NO ERRORS)
+                    Text(
+                        "The Chess Club welcomes all students, from beginners to advanced players.",
+                        color = DarkText
+                    )
+                    Spacer(Modifier.height(6.dp))
+
+                    Text(
+                        "Meet classmates, seniors and juniors who share the same love for strategy.",
+                        color = DarkText
+                    )
+                    Spacer(Modifier.height(6.dp))
+
+                    Text(
+                        "We learn together, play together and grow together like a family.",
+                        color = DarkText
+                    )
+                    Spacer(Modifier.height(6.dp))
+
+                    Text(
+                        "If you enjoy thinking ahead and challenging yourself, this club is the perfect place.",
+                        color = DarkText
+                    )
                 }
             }
         }
@@ -97,13 +124,17 @@ private fun BottomNavDetailBar(onBack: () -> Unit) {
                 onClick = onBack,
                 colors = ButtonDefaults.buttonColors(containerColor = BlueButton),
                 shape = RoundedCornerShape(20.dp)
-            ) { Text("Home", color = Color.White) }
+            ) {
+                Text("Home", color = Color.White)
+            }
 
             Button(
                 onClick = {},
                 colors = ButtonDefaults.buttonColors(containerColor = BlueButton),
                 shape = RoundedCornerShape(20.dp)
-            ) { Text("Profile", color = Color.White) }
+            ) {
+                Text("Profile", color = Color.White)
+            }
         }
     }
 }

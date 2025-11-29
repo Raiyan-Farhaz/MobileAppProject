@@ -47,12 +47,11 @@ fun MusicClubDetailScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            // REAL IMAGE HERE
+            // REAL IMAGE
             Image(
                 painter = painterResource(id = R.drawable.music),
                 contentDescription = null,
-                modifier = Modifier
-                    .size(140.dp)
+                modifier = Modifier.size(140.dp)
             )
 
             Spacer(Modifier.height(16.dp))
@@ -69,7 +68,7 @@ fun MusicClubDetailScreen(
                     Spacer(Modifier.height(8.dp))
 
                     Text(
-                        text = "Join the TUS Music club to learn instruments, sing, and compose.",
+                        text = "Join the TUS Music Club to learn instruments, sing, perform, and compose.",
                         color = DarkText
                     )
 
@@ -84,7 +83,45 @@ fun MusicClubDetailScreen(
                         Text("Contact / Join Club", color = Color.White)
                     }
 
-                    Spacer(Modifier.height(12.dp))
+                    Spacer(Modifier.height(16.dp))
+
+                    // ⭐ NEW DESCRIPTION PARAGRAPH (SAFE TEXT LINES)
+                    Text(
+                        "If you love music—whether it’s singing, playing, or producing—",
+                        color = DarkText
+                    )
+                    Text(
+                        "the Music Club is the perfect place to express your creativity.",
+                        color = DarkText
+                    )
+                    Spacer(Modifier.height(6.dp))
+
+                    Text(
+                        "You’ll meet other students who share the same passion as you,",
+                        color = DarkText
+                    )
+                    Text(
+                        "from beginners just starting out to experienced musicians.",
+                        color = DarkText
+                    )
+                    Spacer(Modifier.height(6.dp))
+
+                    Text(
+                        "Together we learn, jam, perform, and support each other like a family.",
+                        color = DarkText
+                    )
+                    Spacer(Modifier.height(6.dp))
+
+                    Text(
+                        "Whether you want to join a band, sing in events, or produce beats,",
+                        color = DarkText
+                    )
+                    Text(
+                        "there’s a place for you here in the TUS Music Club.",
+                        color = DarkText
+                    )
+
+                    Spacer(Modifier.height(16.dp))
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -129,3 +166,4 @@ fun MusicClubDetailScreen(
         }
     }
 }
+
