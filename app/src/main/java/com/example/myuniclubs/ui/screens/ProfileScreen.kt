@@ -15,9 +15,11 @@ import com.example.myuniclubs.ui.theme.*
 
 @Composable
 fun ProfileScreen(
+    userName: String,
     userEmail: String,
     onNavigateToSaved: () -> Unit,
-    onLogout: () -> Unit
+    onLogout: () -> Unit,
+    onNavigateHome: () -> Unit      // ⬅ NEW
 ) {
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -57,12 +59,20 @@ fun ProfileScreen(
 
             Spacer(Modifier.height(16.dp))
 
-            // EMAIL AS NAME
+            // NAME
             Text(
-                text = userEmail,
+                text = userName,
                 fontWeight = FontWeight.Bold,
                 color = DarkText,
                 style = MaterialTheme.typography.titleMedium
+            )
+
+            Spacer(Modifier.height(6.dp))
+
+            // EMAIL
+            Text(
+                text = userEmail,
+                color = DarkText
             )
 
             Spacer(Modifier.height(24.dp))
@@ -77,7 +87,7 @@ fun ProfileScreen(
             ProfileButton("Settings and Preferences") {}
             Spacer(Modifier.height(25.dp))
 
-            // LOG OUT
+            // LOGOUT
             Button(
                 onClick = onLogout,
                 modifier = Modifier
@@ -101,20 +111,17 @@ fun ProfileScreen(
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-
-                // Home Button
+                // ✅ HOME BUTTON (now works)
                 Button(
-                    onClick = {},
+                    onClick = onNavigateHome,
                     colors = ButtonDefaults.buttonColors(containerColor = BlueButton),
                     shape = RoundedCornerShape(20.dp)
                 ) {
                     Text("Home", color = Color.White)
                 }
 
-                // Profile Button
                 Button(
                     onClick = {},
                     colors = ButtonDefaults.buttonColors(containerColor = BlueButton),
@@ -140,4 +147,3 @@ private fun ProfileButton(text: String, onClick: () -> Unit) {
         Text(text, color = DarkText)
     }
 }
-

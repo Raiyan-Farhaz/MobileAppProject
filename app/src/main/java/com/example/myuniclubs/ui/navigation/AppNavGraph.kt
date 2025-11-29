@@ -47,7 +47,6 @@ fun AppNavGraph() {
                 onNavigateToClubs = { navController.navigate("clubs") },
                 onNavigateToSaved = { navController.navigate("saved") },
                 onNavigateToProfile = { navController.navigate("profile") },
-                // pass navigation for club clicks:
                 onClubClick = { clubId ->
                     when (clubId) {
                         1 -> navController.navigate("musicDetail")
@@ -93,16 +92,20 @@ fun AppNavGraph() {
         // ---------------- PROFILE ----------------
         composable("profile") {
 
-            val email = FirebaseAuth.getInstance().currentUser?.email ?: "Unknown User"
+            val user = FirebaseAuth.getInstance().currentUser
+            val email = user?.email ?: "Unknown Email"
+            val name = user?.displayName ?: "Unknown User"
 
             ProfileScreen(
+                userName = name,
                 userEmail = email,
                 onNavigateToSaved = { navController.navigate("saved") },
                 onLogout = {
                     navController.navigate("login") {
                         popUpTo("home") { inclusive = true }
                     }
-                }
+                },
+                onNavigateHome = { navController.navigate("home") } // NEW
             )
         }
     }
