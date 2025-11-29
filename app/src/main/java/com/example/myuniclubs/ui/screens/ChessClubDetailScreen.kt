@@ -20,6 +20,7 @@ fun ChessClubDetailScreen(onBack: () -> Unit) {
 
     Column(Modifier.fillMaxSize()) {
 
+        // ------- HEADER -------
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -29,10 +30,12 @@ fun ChessClubDetailScreen(onBack: () -> Unit) {
         ) {
             Text(
                 text = "Chess Club Details",
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.headlineSmall
             )
         }
 
+        // ------- ORANGE CONTENT -------
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -40,6 +43,7 @@ fun ChessClubDetailScreen(onBack: () -> Unit) {
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             Image(
                 painter = painterResource(id = R.drawable.chess),
                 contentDescription = null,
@@ -55,16 +59,52 @@ fun ChessClubDetailScreen(onBack: () -> Unit) {
             ) {
                 Column(Modifier.padding(16.dp)) {
                     Text("Chess Club", fontWeight = FontWeight.Bold)
-                    Text("Challenge your mind. Weekly chess meets!")
+                    Text("Challenge your mind. Weekly meetings available!")
+
                     Spacer(Modifier.height(10.dp))
-                    Button(onClick = {}, colors = ButtonDefaults.buttonColors(BlueButton)) {
+
+                    Button(
+                        onClick = {},
+                        colors = ButtonDefaults.buttonColors(BlueButton),
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(20.dp)
+                    ) {
                         Text("Join Club", color = Color.White)
                     }
                 }
             }
         }
 
-        BottomNavDetail(onBack)
+        // ------- BOTTOM NAV -------
+        BottomNavDetailBar(onBack)
+    }
+}
+
+@Composable
+private fun BottomNavDetailBar(onBack: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(80.dp)
+            .background(BlueHeader),
+        contentAlignment = Alignment.Center
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Button(
+                onClick = onBack,
+                colors = ButtonDefaults.buttonColors(containerColor = BlueButton),
+                shape = RoundedCornerShape(20.dp)
+            ) { Text("Home", color = Color.White) }
+
+            Button(
+                onClick = {},
+                colors = ButtonDefaults.buttonColors(containerColor = BlueButton),
+                shape = RoundedCornerShape(20.dp)
+            ) { Text("Profile", color = Color.White) }
+        }
     }
 }
 
