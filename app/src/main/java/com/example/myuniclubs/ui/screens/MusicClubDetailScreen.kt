@@ -31,7 +31,7 @@ fun MusicClubDetailScreen(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "Football Club Details",
+                text = "Music Club Details",
                 fontWeight = FontWeight.Bold,
                 color = DarkText,
                 style = MaterialTheme.typography.headlineSmall
@@ -64,10 +64,10 @@ fun MusicClubDetailScreen(
                 shape = RoundedCornerShape(10.dp)
             ) {
                 Column(Modifier.padding(16.dp)) {
-                    Text("TUS Football Club", fontWeight = FontWeight.Bold, color = DarkText)
+                    Text("TUS Music Club", fontWeight = FontWeight.Bold, color = DarkText)
                     Spacer(Modifier.height(8.dp))
                     Text(
-                        text = "Join the TUS Football club to learn, play and compete.",
+                        text = "Join the TUS Music club to learn, sing and compose.",
                         color = DarkText
                     )
 
