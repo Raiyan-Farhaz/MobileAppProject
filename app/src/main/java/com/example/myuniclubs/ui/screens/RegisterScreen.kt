@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun RegisterScreen(
     viewModel: AuthViewModel = viewModel(),
-    onRegisterSuccess: () -> Unit,        // ✅ FIXED
+    onRegisterSuccess: () -> Unit,
     onNavigateToLogin: () -> Unit
 ) {
     val authState by viewModel.authState.collectAsState()
@@ -38,7 +38,7 @@ fun RegisterScreen(
     // Navigate when registration succeeds
     LaunchedEffect(authState) {
         if (authState is AuthState.Success) {
-            onRegisterSuccess()            // ✅ FIXED
+            onRegisterSuccess()
         }
     }
 

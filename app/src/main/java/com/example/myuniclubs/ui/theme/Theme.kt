@@ -10,7 +10,7 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
-// ---- Use your FIGMA colours from Color.kt ----
+
 private val DarkColorScheme = darkColorScheme(
     primary = BlueHeader,
     secondary = OrangeBackground,

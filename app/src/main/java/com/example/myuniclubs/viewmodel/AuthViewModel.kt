@@ -43,7 +43,7 @@ class AuthViewModel : ViewModel() {
     }
 
     // ---------------------------------------------------
-    // REGISTER USER (Name + Email + Password)
+    // REGISTER USER
     // ---------------------------------------------------
     fun registerWithName(name: String, email: String, password: String) {
         viewModelScope.launch {

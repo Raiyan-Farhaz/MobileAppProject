@@ -37,7 +37,7 @@ fun MusicClubDetailScreen(
             )
         }
 
-        // ------- ORANGE CONTENT -------
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -47,7 +47,7 @@ fun MusicClubDetailScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            // REAL IMAGE
+            // IMAGE
             Image(
                 painter = painterResource(id = R.drawable.music),
                 contentDescription = null,
@@ -85,7 +85,7 @@ fun MusicClubDetailScreen(
 
                     Spacer(Modifier.height(16.dp))
 
-                    // ⭐ NEW DESCRIPTION PARAGRAPH (SAFE TEXT LINES)
+                    //NEW DESCRIPTION PARAGRAPH
                     Text(
                         "If you love music—whether it’s singing, playing, or producing—",
                         color = DarkText

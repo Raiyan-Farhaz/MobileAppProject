@@ -16,5 +16,5 @@ import androidx.compose.ui.graphics.Color
 val BlueHeader = Color(0xFF5ED7E6)      // Header background (light turquoise)
 val OrangeBackground = Color(0xFFFFA64B) // Orange main background
 val BlueButton = Color(0xFF2D4C7A)      // Blue login/register button
-val LightGrayField = Color(0xFFD9D9D9)  // TextField background from figma
+val LightGrayField = Color(0xFFD9D9D9)  // TextField background
 val DarkText = Color(0xFF000000)        // Black text

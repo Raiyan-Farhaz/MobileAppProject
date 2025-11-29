@@ -47,7 +47,7 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            // ------------------ HEADER (BLUE) ------------------
+            // ------------------ HEADER ------------------
             Box(
                 modifier = Modifier
                     .fillMaxWidth()

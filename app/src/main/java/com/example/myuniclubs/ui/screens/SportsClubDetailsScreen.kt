@@ -35,7 +35,7 @@ fun SportsClubDetailsScreen(onBack: () -> Unit) {
             )
         }
 
-        // ------- ORANGE CONTENT -------
+
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -75,7 +75,7 @@ fun SportsClubDetailsScreen(onBack: () -> Unit) {
 
                     Spacer(Modifier.height(16.dp))
 
-                    // ⭐ NEW PARAGRAPH ABOUT OUTDOOR SPORTS & CLUB FEEL
+                    // PARAGRAPH ABOUT OUTDOOR SPORTS & CLUB FEEL
                     Text("The Gaming Club brings together players who enjoy teamwork, strategy, and friendly competition.")
                     Spacer(Modifier.height(6.dp))
 

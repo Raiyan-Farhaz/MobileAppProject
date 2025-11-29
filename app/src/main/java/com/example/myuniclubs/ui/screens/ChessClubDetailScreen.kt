@@ -35,7 +35,7 @@ fun ChessClubDetailScreen(onBack: () -> Unit) {
             )
         }
 
-        // ------- ORANGE CONTENT -------
+
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -75,7 +75,7 @@ fun ChessClubDetailScreen(onBack: () -> Unit) {
 
                     Spacer(Modifier.height(16.dp))
 
-                    // ⭐ NEW SIMPLE DESCRIPTION (NO ERRORS)
+
                     Text(
                         "The Chess Club welcomes all students, from beginners to advanced players.",
                         color = DarkText

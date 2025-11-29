@@ -22,7 +22,7 @@ fun ProfileScreen(
     onNavigateHome: () -> Unit
 ) {
 
-    // ⭐ EASY NEW FEATURE – LOCAL DARK MODE TOGGLE
+    //  LOCAL DARK MODE TOGGLE
     var darkMode by remember { mutableStateOf(false) }
 
     val backgroundColor = if (darkMode) Color.DarkGray else OrangeBackground
