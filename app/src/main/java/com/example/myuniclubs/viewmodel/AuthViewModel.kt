@@ -23,27 +23,56 @@ class AuthViewModel : ViewModel() {
     private val _authState = MutableStateFlow<AuthState>(AuthState.Idle)
     val authState = _authState.asStateFlow()
 
+    // EMAIL from Firebase auth
     val currentUserEmail: String?
         get() = firebaseAuth.currentUser?.email
 
-    // 🔥 Register WITH name
+    // NAME from Firestore
+    private val _currentUserName = MutableStateFlow<String?>(null)
+    val currentUserName = _currentUserName.asStateFlow()
+
+    init {
+        loadUserName()   // fetch name when ViewModel loads
+    }
+
+    // Load user's name from Firestore
+    private fun loadUserName() {
+        viewModelScope.launch {
+            val uid = firebaseAuth.currentUser?.uid ?: return@launch
+            val name = repo.getUserName(uid)
+            _currentUserName.value = name
+        }
+    }
+
+    // REGISTER with name + email + password
     fun registerWithName(name: String, email: String, password: String) {
         viewModelScope.launch {
             _authState.value = AuthState.Loading
             val result = repo.registerWithName(name, email, password)
-            _authState.value =
-                if (result.isSuccess) AuthState.Success
-                else AuthState.Error(result.exceptionOrNull()?.message ?: "Unknown error")
+
+            if (result.isSuccess) {
+                loadUserName()
+                _authState.value = AuthState.Success
+            } else {
+                _authState.value =
+                    AuthState.Error(result.exceptionOrNull()?.message ?: "Unknown error")
+            }
         }
     }
 
+    // LOGIN
     fun login(email: String, password: String) {
         viewModelScope.launch {
             _authState.value = AuthState.Loading
             val result = repo.login(email, password)
-            _authState.value =
-                if (result.isSuccess) AuthState.Success
-                else AuthState.Error(result.exceptionOrNull()?.message ?: "Unknown error")
+
+            if (result.isSuccess) {
+                loadUserName()
+                _authState.value = AuthState.Success
+            } else {
+                _authState.value =
+                    AuthState.Error(result.exceptionOrNull()?.message ?: "Unknown error")
+            }
         }
     }
 

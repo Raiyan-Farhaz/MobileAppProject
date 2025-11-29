@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,6 +25,9 @@ fun HomeScreen(
     viewModel: AuthViewModel = viewModel()
 ) {
     val userEmail = viewModel.currentUserEmail ?: "User"
+
+    // 🔥 NEW — fetch name stored in Firestore
+    val userName = viewModel.currentUserName ?: "Student"
 
     val sampleClubs = listOf(
         ClubEntity(1, "Music Club", "Arts", "Love music? Join us!"),
@@ -51,7 +53,7 @@ fun HomeScreen(
                     style = MaterialTheme.typography.headlineSmall
                 )
                 Text(
-                    text = "Welcome, $userEmail",
+                    text = "Welcome, $userName",
                     color = DarkText,
                     fontWeight = FontWeight.Medium
                 )
@@ -71,12 +73,10 @@ fun HomeScreen(
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { onClubClick(club.id) }   // ⬅ ADD THIS
+                        .clickable { onClubClick(club.id) }
                         .padding(vertical = 10.dp),
 
-                    colors = CardDefaults.cardColors(
-                        containerColor = LightGrayField
-                    ),
+                    colors = CardDefaults.cardColors(containerColor = LightGrayField),
                     shape = RoundedCornerShape(10.dp)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
@@ -114,25 +114,19 @@ fun HomeScreen(
                     onClick = onNavigateToClubs,
                     colors = ButtonDefaults.buttonColors(containerColor = BlueButton),
                     shape = RoundedCornerShape(20.dp)
-                ) {
-                    Text("All Clubs", color = Color.White)
-                }
+                ) { Text("All Clubs", color = Color.White) }
 
                 Button(
                     onClick = onNavigateToSaved,
                     colors = ButtonDefaults.buttonColors(containerColor = BlueButton),
                     shape = RoundedCornerShape(20.dp)
-                ) {
-                    Text("Saved Clubs", color = Color.White)
-                }
+                ) { Text("Saved Clubs", color = Color.White) }
 
                 Button(
                     onClick = onNavigateToProfile,
                     colors = ButtonDefaults.buttonColors(containerColor = BlueButton),
                     shape = RoundedCornerShape(20.dp)
-                ) {
-                    Text("Profile", color = Color.White)
-                }
+                ) { Text("Profile", color = Color.White) }
             }
         }
     }
