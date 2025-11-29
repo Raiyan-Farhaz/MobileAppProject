@@ -52,8 +52,16 @@ class AuthViewModel : ViewModel() {
             val result = repo.registerWithName(name, email, password)
 
             if (result.isSuccess) {
-                loadUserName()  // ⬅ Load freshly saved name
+
+                // 🔥 Make Firebase refresh the logged-in user
+                firebaseAuth.currentUser?.reload()
+
+                // 🔥 Now load the name safely
+                loadUserName()
+
+                // 🔥 NOW set success
                 _authState.value = AuthState.Success
+
             } else {
                 _authState.value =
                     AuthState.Error(result.exceptionOrNull()?.message ?: "Unknown error")
