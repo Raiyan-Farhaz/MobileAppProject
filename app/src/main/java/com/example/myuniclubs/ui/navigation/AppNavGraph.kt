@@ -1,14 +1,15 @@
 package com.example.myuniclubs.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.myuniclubs.ui.screens.*
+import com.example.myuniclubs.viewmodel.AuthViewModel
 import com.example.myuniclubs.data.ClubEntity
-import com.google.firebase.auth.FirebaseAuth
 
-// Temporary sample clubs for list/preview
+// Temporary sample clubs
 val sampleClubs = listOf(
     ClubEntity(1, "Music Club", "Arts", "Love music? Join us!"),
     ClubEntity(2, "Gaming Club", "Entertainment", "Gamers unite!"),
@@ -19,6 +20,7 @@ val sampleClubs = listOf(
 fun AppNavGraph() {
 
     val navController = rememberNavController()
+    val authViewModel: AuthViewModel = viewModel()
 
     NavHost(
         navController = navController,
@@ -28,7 +30,10 @@ fun AppNavGraph() {
         // ---------------- LOGIN ----------------
         composable("login") {
             LoginScreen(
-                onLoginSuccess = { navController.navigate("home") },
+                onLoginSuccess = {
+                    authViewModel.loadUserName() // load name after login
+                    navController.navigate("home")
+                },
                 onNavigateToRegister = { navController.navigate("register") }
             )
         }
@@ -36,7 +41,10 @@ fun AppNavGraph() {
         // ---------------- REGISTER ----------------
         composable("register") {
             RegisterScreen(
-                onRegisterSuccess = { navController.navigate("home") },
+                onRegisterSuccess = {
+                    authViewModel.loadUserName() // load name after register
+                    navController.navigate("home")
+                },
                 onNavigateToLogin = { navController.navigate("login") }
             )
         }
@@ -71,7 +79,7 @@ fun AppNavGraph() {
             )
         }
 
-        // ---------------- INDIVIDUAL CLUB DETAIL PAGES ----------------
+        // ---------------- CLUB DETAILS ----------------
         composable("musicDetail") {
             MusicClubDetailScreen(onBack = { navController.popBackStack() })
         }
@@ -84,7 +92,7 @@ fun AppNavGraph() {
             ChessClubDetailScreen(onBack = { navController.popBackStack() })
         }
 
-        // ---------------- SAVED CLUBS ----------------
+        // ---------------- SAVED ----------------
         composable("saved") {
             SavedClubsScreen(savedClubs = sampleClubs.filter { it.saved })
         }
@@ -92,9 +100,8 @@ fun AppNavGraph() {
         // ---------------- PROFILE ----------------
         composable("profile") {
 
-            val user = FirebaseAuth.getInstance().currentUser
-            val email = user?.email ?: "Unknown Email"
-            val name = user?.displayName ?: "Unknown User"
+            val name = authViewModel.currentUserName.value ?: "Student"
+            val email = authViewModel.currentUserEmail ?: "Unknown Email"
 
             ProfileScreen(
                 userName = name,
@@ -105,7 +112,7 @@ fun AppNavGraph() {
                         popUpTo("home") { inclusive = true }
                     }
                 },
-                onNavigateHome = { navController.navigate("home") } // NEW
+                onNavigateHome = { navController.navigate("home") }
             )
         }
     }

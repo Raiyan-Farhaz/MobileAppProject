@@ -19,7 +19,7 @@ fun ProfileScreen(
     userEmail: String,
     onNavigateToSaved: () -> Unit,
     onLogout: () -> Unit,
-    onNavigateHome: () -> Unit      // ⬅ NEW
+    onNavigateHome: () -> Unit
 ) {
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -113,7 +113,8 @@ fun ProfileScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                // ✅ HOME BUTTON (now works)
+
+                // HOME BUTTON
                 Button(
                     onClick = onNavigateHome,
                     colors = ButtonDefaults.buttonColors(containerColor = BlueButton),
@@ -122,6 +123,7 @@ fun ProfileScreen(
                     Text("Home", color = Color.White)
                 }
 
+                // PROFILE BUTTON
                 Button(
                     onClick = {},
                     colors = ButtonDefaults.buttonColors(containerColor = BlueButton),

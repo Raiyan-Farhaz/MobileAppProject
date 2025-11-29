@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,8 +27,8 @@ fun HomeScreen(
 ) {
     val userEmail = viewModel.currentUserEmail ?: "User"
 
-    // 🔥 NEW — fetch name stored in Firestore
-    val userName = viewModel.currentUserName ?: "Student"
+    // ✅ Collect name from StateFlow
+    val userName = viewModel.currentUserName.collectAsState().value ?: "Student"
 
     val sampleClubs = listOf(
         ClubEntity(1, "Music Club", "Arts", "Love music? Join us!"),
@@ -75,7 +76,6 @@ fun HomeScreen(
                         .fillMaxWidth()
                         .clickable { onClubClick(club.id) }
                         .padding(vertical = 10.dp),
-
                     colors = CardDefaults.cardColors(containerColor = LightGrayField),
                     shape = RoundedCornerShape(10.dp)
                 ) {
