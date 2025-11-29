@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,6 +22,12 @@ fun ProfileScreen(
     onNavigateHome: () -> Unit
 ) {
 
+    // ⭐ EASY NEW FEATURE – LOCAL DARK MODE TOGGLE
+    var darkMode by remember { mutableStateOf(false) }
+
+    val backgroundColor = if (darkMode) Color.DarkGray else OrangeBackground
+    val textColor = if (darkMode) Color.White else DarkText
+
     Column(modifier = Modifier.fillMaxSize()) {
 
         // ---------------- HEADER ----------------
@@ -35,22 +41,22 @@ fun ProfileScreen(
             Text(
                 text = "My TUS Profile",
                 fontWeight = FontWeight.Bold,
-                color = DarkText,
+                color = textColor,
                 style = MaterialTheme.typography.headlineSmall
             )
         }
 
-        // ---------------- ORANGE BODY ----------------
+        // ---------------- BODY ----------------
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .background(OrangeBackground)
+                .background(backgroundColor)
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            // Profile Picture Placeholder
+            // Profile placeholder
             Box(
                 modifier = Modifier
                     .size(110.dp)
@@ -59,25 +65,32 @@ fun ProfileScreen(
 
             Spacer(Modifier.height(16.dp))
 
-            // NAME
-            Text(
-                text = userName,
-                fontWeight = FontWeight.Bold,
-                color = DarkText,
-                style = MaterialTheme.typography.titleMedium
-            )
-
-            Spacer(Modifier.height(6.dp))
-
-            // EMAIL
-            Text(
-                text = userEmail,
-                color = DarkText
-            )
+            Text(userName, fontWeight = FontWeight.Bold, color = textColor)
+            Text(userEmail, color = textColor)
 
             Spacer(Modifier.height(24.dp))
 
-            // BUTTONS
+            // ⭐ NEW DARK MODE SWITCH
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "Dark Mode",
+                    color = textColor,
+                    modifier = Modifier.weight(1f)
+                )
+                Switch(
+                    checked = darkMode,
+                    onCheckedChange = { darkMode = it },
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = BlueButton
+                    )
+                )
+            }
+
+            Spacer(Modifier.height(24.dp))
+
             ProfileButton("My Saved Clubs", onNavigateToSaved)
             Spacer(Modifier.height(12.dp))
 
@@ -85,14 +98,13 @@ fun ProfileScreen(
             Spacer(Modifier.height(12.dp))
 
             ProfileButton("Settings and Preferences") {}
-            Spacer(Modifier.height(25.dp))
 
-            // LOGOUT
+            Spacer(Modifier.height(20.dp))
+
             Button(
                 onClick = onLogout,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
                     .height(50.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = BlueButton),
                 shape = RoundedCornerShape(20.dp)
@@ -109,12 +121,12 @@ fun ProfileScreen(
                 .background(BlueHeader),
             contentAlignment = Alignment.Center
         ) {
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
 
-                // HOME BUTTON
                 Button(
                     onClick = onNavigateHome,
                     colors = ButtonDefaults.buttonColors(containerColor = BlueButton),
@@ -123,7 +135,6 @@ fun ProfileScreen(
                     Text("Home", color = Color.White)
                 }
 
-                // PROFILE BUTTON
                 Button(
                     onClick = {},
                     colors = ButtonDefaults.buttonColors(containerColor = BlueButton),
