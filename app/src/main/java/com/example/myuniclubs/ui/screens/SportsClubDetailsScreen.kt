@@ -58,6 +58,7 @@ fun SportsClubDetailsScreen(onBack: () -> Unit) {
                 colors = CardDefaults.cardColors(LightGrayField)
             ) {
                 Column(Modifier.padding(16.dp)) {
+
                     Text("Gaming Club", fontWeight = FontWeight.Bold)
                     Text("Competitive gaming, events & tournaments.")
 
@@ -71,6 +72,20 @@ fun SportsClubDetailsScreen(onBack: () -> Unit) {
                     ) {
                         Text("Join Club", color = Color.White)
                     }
+
+                    Spacer(Modifier.height(16.dp))
+
+                    // ⭐ NEW PARAGRAPH ABOUT OUTDOOR SPORTS & CLUB FEEL
+                    Text("The Gaming Club brings together players who enjoy teamwork, strategy, and friendly competition.")
+                    Spacer(Modifier.height(6.dp))
+
+                    Text("Along with digital gaming, we participate in outdoor sports like cricket, football, rugby, tennis, and basketball.")
+                    Spacer(Modifier.height(6.dp))
+
+                    Text("Members get a chance to meet other passionate students, test their skills, and grow together as a community.")
+                    Spacer(Modifier.height(6.dp))
+
+                    Text("Whether you're a casual player or competitive gamer, you'll find teammates, friends, and a fun environment waiting for you.")
                 }
             }
         }
