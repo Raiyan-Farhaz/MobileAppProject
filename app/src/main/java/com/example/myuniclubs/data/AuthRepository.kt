@@ -47,7 +47,7 @@ class AuthRepository {
     }
 
     // --------------------------------------------------------
-    // 🔥 FETCH USER NAME FROM FIRESTORE
+    //  FETCH USER NAME FROM FIRESTORE
     // --------------------------------------------------------
     suspend fun getUserName(uid: String): String? {
         return try {
