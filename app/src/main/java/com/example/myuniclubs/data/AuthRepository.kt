@@ -10,7 +10,7 @@ class AuthRepository {
     private val db = FirebaseFirestore.getInstance()
 
     // --------------------------------------------------------
-    // 🔥 REGISTER USER (Name + Email stored in Firestore)
+    //  REGISTER USER (Name + Email stored in Firestore)
     // --------------------------------------------------------
     suspend fun registerWithName(name: String, email: String, password: String): Result<Unit> {
         return try {
@@ -35,7 +35,7 @@ class AuthRepository {
     }
 
     // --------------------------------------------------------
-    // 🔥 LOGIN USER
+    //  LOGIN USER
     // --------------------------------------------------------
     suspend fun login(email: String, password: String): Result<Unit> {
         return try {

@@ -27,7 +27,7 @@ fun HomeScreen(
 ) {
     val userEmail = viewModel.currentUserEmail ?: "User"
 
-    // ✅ Collect name from StateFlow
+    //  Collect name from StateFlow
     val userName = viewModel.currentUserName.collectAsState().value ?: "Student"
 
     val sampleClubs = listOf(

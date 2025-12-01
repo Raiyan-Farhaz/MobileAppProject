@@ -53,13 +53,13 @@ class AuthViewModel : ViewModel() {
 
             if (result.isSuccess) {
 
-                // 🔥 Make Firebase refresh the logged-in user
+                //  Firebase refresh the logged-in user
                 firebaseAuth.currentUser?.reload()
 
-                // 🔥 Now load the name safely
+                //  load the name safely
                 loadUserName()
 
-                // 🔥 NOW set success
+                //  NOW set success
                 _authState.value = AuthState.Success
 
             } else {
