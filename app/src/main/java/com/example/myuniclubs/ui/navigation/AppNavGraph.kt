@@ -9,7 +9,7 @@ import com.example.myuniclubs.ui.screens.*
 import com.example.myuniclubs.viewmodel.AuthViewModel
 import com.example.myuniclubs.data.ClubEntity
 
-// Temporary sample clubs
+
 val sampleClubs = listOf(
     ClubEntity(1, "Music Club", "Arts", "Love music? Join us!"),
     ClubEntity(2, "Gaming Club", "Entertainment", "Gamers unite!"),
